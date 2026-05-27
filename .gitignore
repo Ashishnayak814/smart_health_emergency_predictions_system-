@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+.env
+backend/.env
+
+backend/__pycache__/
+backend/uploads/
+backend/health_system.db
+
+.vscode/
