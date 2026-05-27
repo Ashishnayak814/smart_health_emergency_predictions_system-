@@ -2,6 +2,8 @@
 
 This project contains a FastAPI backend and a static frontend dashboard for monitoring simulated health vitals, tracking risk predictions, managing emergency contacts, storing PDF reports, and authenticating multiple users with isolated data.
 
+ Developed a real-time health monitoring system that continuously tracks vital parameters — Heart Rate, Blood Oxygen Saturation (SpO₂), and Blood Pressure and predicts potential medical emergencies using a Random Forest machine learning model. The system classifies health conditions into three categories: Stable, Critical Soon, and Critical Now, using trend-based feature engineering instead of fixed thresholds. When a critical condition is detected with confidence above 0.85, the system automatically sends SMS alerts to emergency contacts via Twilio API without any manual intervention. A web-based dashboard built with HTML, JavaScript, and Chart.js provides real-time data visualization. Backend developed using FastAPI with SQLite database for storing health records, emergency contacts, and user settings
+
 ## Project Structure
 
 - `backend/main.py`: FastAPI server and API routes
