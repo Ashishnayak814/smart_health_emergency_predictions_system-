@@ -50,6 +50,9 @@ Then open:
 
 `http://127.0.0.1:8001/frontend/index.html`
 
+<img width="1919" height="1067" alt="Screenshot 2026-04-09 090604" src="https://github.com/user-attachments/assets/ae6481a8-d751-49b4-b6e2-d392e92c3fd2" />
+
+
 ## Notes
 
 - Uploaded reports are stored in `backend/uploads/`.
