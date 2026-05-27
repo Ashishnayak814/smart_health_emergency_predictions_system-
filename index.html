@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Health Emergency Prediction System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="app-body bg-slate-100 text-slate-900">
+    <section id="auth-screen" class="auth-shell">
+        <div class="auth-backdrop auth-backdrop-one"></div>
+        <div class="auth-backdrop auth-backdrop-two"></div>
+        <div class="auth-grid">
+            <div class="auth-hero">
+                <div class="auth-hero-copy">
+                    <h1>Smart Health Emergency Prediction System</h1>
+                </div>
+                <div class="auth-visual-stage" aria-hidden="true">
+                    <div class="auth-orbit auth-orbit-one"></div>
+                    <div class="auth-orbit auth-orbit-two"></div>
+                    <div class="auth-core-card">
+                        <span class="auth-core-label">Live Secure Access</span>
+                        <strong>Patient Monitoring</strong>
+                        <p>Private login for alerts, reports, vitals, and settings.</p>
+                    </div>
+                    <div class="auth-floating-chip auth-chip-top">
+                        <span class="auth-chip-dot"></span>
+                        Real-time status
+                    </div>
+                    <div class="auth-floating-chip auth-chip-bottom">Protected user records</div>
+                </div>
+            </div>
+
+            <div class="auth-card">
+                <div class="auth-card-glow"></div>
+                <div class="auth-card-inner">
+                    <div class="auth-card-head">
+                        <p class="auth-eyebrow">Secure Access</p>
+                        <h2>Welcome back</h2>
+                        <p class="auth-subtitle">Sign in to view live vitals, risk trends, contacts, and reports.</p>
+                    </div>
+
+                    <div class="auth-switcher" role="tablist" aria-label="Authentication">
+                        <button id="show-login-tab" class="auth-tab is-active" type="button">Login</button>
+                        <button id="show-register-tab" class="auth-tab" type="button">Register</button>
+                    </div>
+
+                    <div id="auth-message" class="auth-notice hidden"></div>
+
+                    <form id="login-form" class="auth-form">
+                        <div class="auth-field">
+                            <label for="login-email">Email</label>
+                            <input id="login-email" type="email" placeholder="you@example.com" minlength="5" required>
+                        </div>
+                        <div class="auth-field">
+                            <label for="login-password">Password</label>
+                            <input id="login-password" type="password" placeholder="Minimum 8 characters" minlength="8" required>
+                        </div>
+                        <button type="submit" class="auth-submit">Login to Dashboard</button>
+                        <p class="mt-4 text-center text-sm text-slate-600">
+                            Forgot password? <button type="button" onclick="setAuthMode('reset')" class="font-semibold text-blue-600 hover:underline">Reset here</button>
+                        </p>
+                    </form>
+
+                    <form id="register-form" class="auth-form hidden">
+                        <div class="auth-field">
+                            <label for="register-name">Full Name</label>
+                            <input id="register-name" type="text" placeholder="Your full name" minlength="2" required>
+                        </div>
+                        <div class="auth-field">
+                            <label for="register-email">Email</label>
+                            <input id="register-email" type="email" placeholder="you@example.com" minlength="5" required>
+                        </div>
+                        <div class="auth-field">
+                            <label for="register-password">Password</label>
+                            <input id="register-password" type="password" placeholder="Minimum 8 characters" minlength="8" required>
+                        </div>
+                        <button type="submit" class="auth-submit auth-submit-dark">Create Account</button>
+                        <p class="auth-helper-copy">
+                            Forgot your password? <button id="show-reset-link" type="button" class="auth-inline-action">Reset it here</button>
+                        </p>
+                    </form>
+
+                    <form id="reset-form" class="auth-form hidden">
+                        <div class="auth-field">
+                            <label for="reset-email">Email Address</label>
+                            <input id="reset-email" type="email" placeholder="you@example.com" minlength="5" required>
+                        </div>
+                        <div class="auth-field">
+                            <label for="reset-password">New Password</label>
+                            <input id="reset-password" type="password" placeholder="Minimum 8 characters" minlength="8" required>
+                        </div>
+                        <div class="auth-field">
+                            <label for="reset-confirm">Confirm Password</label>
+                            <input id="reset-confirm" type="password" placeholder="Re-enter password" minlength="8" required>
+                        </div>
+                        <button type="submit" class="auth-submit">Reset Password</button>
+                        <p class="mt-4 text-center text-sm text-slate-600">
+                            Remember your password? <button type="button" onclick="setAuthMode('login')" class="font-semibold text-blue-600 hover:underline">Login here</button>
+                        </p>
+                    </form>
+
+                    <div id="auth-reset-panel" class="auth-reset-panel">
+                        <p class="auth-reset-title">Need help with password?</p>
+                        <button id="show-reset-panel-button" type="button" class="auth-reset-trigger">Open Reset Password</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="app-shell" class="hidden">
+        <nav class="app-topbar text-white shadow-lg">
+            <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+                <div>
+                    <p class="text-[11px] uppercase tracking-[0.28em] text-blue-100/80">Emergency Monitoring</p>
+                    <h1 class="text-lg font-bold tracking-tight sm:text-2xl">Smart Health Emergency Prediction System</h1>
+                </div>
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <div id="connection-status" class="inline-flex w-fit items-center rounded-full bg-emerald-500 px-3 py-1 text-sm font-semibold text-white">System Online</div>
+                    <div class="flex items-center gap-3 rounded-full bg-white/10 px-4 py-2">
+                        <div>
+                            <p id="current-user-name" class="text-sm font-semibold">User</p>
+                            <p id="current-user-email" class="text-xs text-blue-100/80">user@example.com</p>
+                        </div>
+                        <button id="logout-button" class="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-wide transition hover:bg-white/10">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <section class="dashboard-menubar text-white">
+            <div class="mx-auto flex max-w-7xl justify-end px-4 py-3 sm:px-6">
+                <nav class="dashboard-nav-scroll">
+                    <div class="dashboard-nav-row">
+                        <div class="sidebar-nav-item is-active" onclick="showPage('dashboard-page', this)" data-page="dashboard-page"><span>Dashboard</span></div>
+                        <div class="sidebar-nav-item" onclick="showPage('analytics-page', this)" data-page="analytics-page">><span>Detailed Analytics</span></div>
+                        <div class="sidebar-nav-item" onclick="showPage('reports-page', this)" data-page="reports-page"><span>Reports</span></div>
+                        <div class="sidebar-nav-item" onclick="showPage('contacts-page', this)" data-page="contacts-page"><span>Emergency Contacts</span></div>
+                        <div class="sidebar-nav-item" onclick="showPage('settings-page', this)" data-page="settings-page"><span>Settings</span></div>
+                    </div>
+                </nav>
+            </div>
+        </section>
+
+        <div class="mx-auto max-w-7xl px-4 py-6 lg:px-6">
+            <section class="min-w-0">
+                <main id="dashboard-page" class="page-content grid grid-cols-1 gap-6 xl:grid-cols-[320px_minmax(0,1fr)]">
+                    <div class="space-y-6">
+                        <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                            <h2 class="mb-4 text-sm font-bold uppercase text-slate-500">Patient Profile</h2>
+                            <div class="flex items-center gap-4">
+                                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-100 text-xl font-bold text-blue-600">AN</div>
+                                <div><p id="dashboard-patient-name" class="text-lg font-bold text-slate-800">Patient</p><p id="dashboard-patient-id" class="text-sm text-slate-500">ID</p></div>
+                            </div>
+                        </div>
+                        <div id="ai-status-card" class="status-card rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm transition-all duration-500">
+                            <h2 class="mb-2 text-left text-sm font-bold uppercase text-slate-500">AI Risk Forecast</h2>
+                            <div id="risk-level" class="mb-1 font-mono text-3xl font-black text-green-600">STABLE</div>
+                            <p id="activity-tag" class="mb-4 text-sm font-semibold italic text-slate-600">Activity: Resting</p>
+                            <hr class="mb-4 border-slate-200">
+                            <p class="text-xs text-slate-500">Prediction Confidence: <span id="conf-score">--%</span></p>
+                        </div>
+                        <div id="prediction-alert-card" class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-500">
+                            <div class="flex flex-col items-center">
+                                <span id="pred-icon" class="mb-2 text-4xl">Scan</span>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500">30-Min AI Forecast</p>
+                                <h3 id="pred-text" class="mt-1 text-center text-sm font-bold italic leading-tight text-slate-700">Analyzing Trends...</h3>
+                                <div id="pred-badge" class="mt-3 rounded-full border border-slate-200 bg-slate-100 px-4 py-1 text-[10px] font-black uppercase text-slate-500">Scanning</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                            <div class="rounded-3xl border border-slate-200 border-l-4 border-l-blue-500 bg-white p-4 shadow-sm"><p class="text-xs font-bold uppercase text-slate-500">Heart Rate</p><p class="text-3xl font-mono font-bold"><span id="hr-val">--</span> <span class="text-sm font-normal">bpm</span></p></div>
+                            <div class="rounded-3xl border border-slate-200 border-l-4 border-l-cyan-500 bg-white p-4 shadow-sm"><p class="text-xs font-bold uppercase text-slate-500">SpO2</p><p class="text-3xl font-mono font-bold"><span id="spo2-val">--</span> <span class="text-sm font-normal">%</span></p></div>
+                            <div class="rounded-3xl border border-slate-200 border-l-4 border-l-red-500 bg-white p-4 shadow-sm"><p class="text-xs font-bold uppercase text-slate-500">Blood Pressure</p><p class="text-3xl font-mono font-bold"><span id="bp-sys">--</span>/<span id="bp-dia">--</span> <span class="text-sm font-normal">mmHg</span></p></div>
+                        </div>
+                        <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h2 class="mb-4 text-left text-sm font-bold uppercase text-slate-500">Live Health Metrics</h2><div style="height: 320px; width: 100%;"><canvas id="vitalChart"></canvas></div></div>
+                        <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                            <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                <h2 class="text-sm font-bold uppercase text-slate-500">Emergency History</h2>
+                                <button onclick="toggleAllRecords()" class="w-full rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-blue-700 transition hover:bg-slate-200 sm:w-auto">View All Records</button>
+                            </div>
+                            <div class="table-scroll"><table class="history-table w-full min-w-[520px]"><thead><tr class="border-b-2 border-slate-100 text-left"><th class="py-2">Time</th><th>HR</th><th>SpO2</th><th>BP</th><th>Status</th></tr></thead><tbody id="history-body"></tbody></table></div>
+                        </div>
+                    </div>
+                </main>
+                <main id="analytics-page" class="page-content hidden"><div class="mb-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h2 class="text-2xl font-bold text-slate-800">Detailed Analytics (24h)</h2><p class="mt-1 text-sm text-slate-500">Heart rate, SpO2, BP and a k-chart style health overview across 24 hours.</p></div><div class="grid grid-cols-1 gap-6 xl:grid-cols-2"><div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h3 class="mb-3 text-sm font-semibold uppercase text-slate-600">24h Trend - HR / SpO2 / BP Sys</h3><div style="height:350px; width:100%;"><canvas id="analytics24Chart"></canvas></div></div><div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h3 class="mb-3 text-sm font-semibold uppercase text-slate-600">K-Style Health Index</h3><div style="height:350px; width:100%;"><canvas id="kChart"></canvas></div></div></div><div class="mt-6 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm"><p class="text-sm text-slate-500">Data is fetched from vitals history API and shown with hour labels. If recent data is not available, placeholder points are generated.</p></div></main>
+                <main id="contacts-page" class="page-content hidden"><div class="mb-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h2 class="text-2xl font-bold text-slate-800">Emergency Contacts & Support</h2><p class="mt-1 text-sm text-slate-500">Quick access to emergency services and support in India.</p></div><div class="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-2"><div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h3 class="mb-4 text-lg font-bold text-slate-800">Manage Emergency Contacts</h3><form id="add-contact-form" class="mb-4 space-y-4"><div><label class="mb-1 block text-sm font-medium text-gray-700">Contact Name</label><input type="text" id="contact-name" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-green-500" placeholder="e.g., Dr. Sharma" required></div><div><label class="mb-1 block text-sm font-medium text-gray-700">Phone Number</label><input type="tel" id="contact-phone" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-green-500" placeholder="+91XXXXXXXXXX" required></div><div><label class="mb-1 block text-sm font-medium text-gray-700">Relationship</label><select id="contact-relationship" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-green-500" required><option value="">Select relationship</option><option value="Family">Family</option><option value="Doctor">Doctor</option><option value="Friend">Friend</option><option value="Caregiver">Caregiver</option><option value="Other">Other</option></select></div><button type="submit" class="w-full rounded-lg bg-green-600 px-4 py-2 font-bold text-white transition-colors hover:bg-green-700">Add Contact</button></form><div id="contacts-list" class="space-y-2"></div></div><div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h3 class="mb-4 text-lg font-bold text-slate-800">Emergency Helplines</h3><div class="space-y-3"><div class="flex flex-col gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 sm:flex-row sm:items-center sm:justify-between"><div><p class="font-semibold text-red-800">National Emergency</p><p class="text-sm text-red-600">All emergencies</p></div><a href="tel:112" class="rounded-lg bg-red-600 px-4 py-2 font-bold text-white hover:bg-red-700">112</a></div><div class="flex flex-col gap-3 rounded-2xl border border-blue-200 bg-blue-50 p-4 sm:flex-row sm:items-center sm:justify-between"><div><p class="font-semibold text-blue-800">Police</p><p class="text-sm text-blue-600">Law enforcement</p></div><a href="tel:100" class="rounded-lg bg-blue-600 px-4 py-2 font-bold text-white hover:bg-blue-700">100</a></div><div class="flex flex-col gap-3 rounded-2xl border border-orange-200 bg-orange-50 p-4 sm:flex-row sm:items-center sm:justify-between"><div><p class="font-semibold text-orange-800">Fire Brigade</p><p class="text-sm text-orange-600">Fire emergencies</p></div><a href="tel:101" class="rounded-lg bg-orange-600 px-4 py-2 font-bold text-white hover:bg-orange-700">101</a></div><div class="flex flex-col gap-3 rounded-2xl border border-green-200 bg-green-50 p-4 sm:flex-row sm:items-center sm:justify-between"><div><p class="font-semibold text-green-800">Ambulance</p><p class="text-sm text-green-600">Medical emergencies</p></div><a href="tel:108" class="rounded-lg bg-green-600 px-4 py-2 font-bold text-white hover:bg-green-700">108</a></div><div class="flex flex-col gap-3 rounded-2xl border border-purple-200 bg-purple-50 p-4 sm:flex-row sm:items-center sm:justify-between"><div><p class="font-semibold text-purple-800">Health Helpline</p><p class="text-sm text-purple-600">Medical advice</p></div><a href="tel:104" class="rounded-lg bg-purple-600 px-4 py-2 font-bold text-white hover:bg-purple-700">104</a></div></div></div></div><div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h3 class="mb-4 text-lg font-bold text-slate-800">Nearby Hospitals</h3><div id="map-container" class="flex h-64 items-center justify-center rounded-2xl bg-slate-100"><p class="text-slate-500">Map integration coming soon. For now, use emergency numbers above.</p></div><p class="mt-2 text-sm text-slate-500">This feature will show nearby hospitals and medical facilities based on your location.</p></div></main>
+                <main id="reports-page" class="page-content hidden"><div class="mb-6"><h2 class="mb-2 text-2xl font-bold text-slate-800">Reports & Analytics</h2><p class="mb-4 text-slate-500">Summary of your health data and risk events.</p><div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4" id="report-summary-cards"></div><div class="mb-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h3 class="mb-4 text-lg font-bold text-slate-800">Risk Event Distribution</h3><canvas id="reportRiskChart" height="120"></canvas><div id="report-last-updated" class="mt-2 text-xs text-slate-500"></div></div><div class="mb-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h3 class="mb-4 text-lg font-bold text-slate-800">Medical Reports</h3><p class="mb-4 text-sm text-slate-500">Upload and view previous medical reports and test results.</p><div class="mb-6 rounded-2xl border-2 border-dashed border-slate-300 p-4"><form id="report-upload-form" enctype="multipart/form-data"><div class="mb-4"><label class="mb-2 block text-sm font-medium text-gray-700">Select PDF Report</label><input type="file" id="report-file" accept=".pdf" class="block w-full text-sm text-gray-500 file:mr-4 file:rounded-full file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100"></div><div class="mb-4"><label class="mb-2 block text-sm font-medium text-gray-700">Description (optional)</label><input type="text" id="report-description" placeholder="e.g., Blood test from 2023" class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></div><button type="submit" class="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Upload Report</button></form></div><div id="reports-list"><h4 class="mb-3 text-md font-semibold text-slate-800">Uploaded Reports</h4><div id="reports-container" class="space-y-2"></div></div></div></div></main>
+                <main id="settings-page" class="page-content hidden"><div class="mb-6"><h2 class="mb-2 text-2xl font-bold text-slate-800">Settings</h2><p class="mb-4 text-slate-500">Configure your emergency alert preferences and system settings.</p></div><div class="grid grid-cols-1 gap-6"><div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h3 class="mb-4 text-lg font-bold text-slate-800">Alert Preferences</h3><form id="alert-settings-form" class="space-y-4"><div class="flex items-center justify-between"><div><label class="text-sm font-medium text-gray-700">SMS Alerts</label><p class="text-xs text-gray-500">Send SMS to emergency contacts</p></div><label class="relative inline-flex cursor-pointer items-center"><input type="checkbox" id="sms-alerts" class="peer sr-only"><div class="peer h-6 w-11 rounded-full bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:bg-blue-600 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white"></div></label></div><div class="flex items-center justify-between"><div><label class="text-sm font-medium text-gray-700">Sound Alerts</label><p class="text-xs text-gray-500">Play alert sounds on device</p></div><label class="relative inline-flex cursor-pointer items-center"><input type="checkbox" id="sound-alerts" class="peer sr-only" checked><div class="peer h-6 w-11 rounded-full bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:bg-blue-600 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white"></div></label></div><div class="flex items-center justify-between"><div><label class="text-sm font-medium text-gray-700">Vibration</label><p class="text-xs text-gray-500">Vibrate device on alerts</p></div><label class="relative inline-flex cursor-pointer items-center"><input type="checkbox" id="vibration" class="peer sr-only" checked><div class="peer h-6 w-11 rounded-full bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:bg-blue-600 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white"></div></label></div><button type="submit" class="w-full rounded-lg bg-blue-600 px-4 py-2 font-bold text-white transition-colors hover:bg-blue-700">Save Alert Settings</button></form></div><div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h3 class="mb-4 text-lg font-bold text-slate-800">Patient Information</h3><form id="patient-info-form" class="space-y-4"><div><label class="mb-2 block text-sm font-medium text-gray-700">Patient Name</label><input type="text" id="patient-name" class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter patient name"></div><div><label class="mb-2 block text-sm font-medium text-gray-700">Patient ID</label><input type="text" id="patient-id" class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter patient ID"></div><button type="submit" class="w-full rounded-lg bg-green-600 px-4 py-2 font-bold text-white transition-colors hover:bg-green-700">Save Patient Information</button></form></div><div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h3 class="mb-4 text-lg font-bold text-slate-800">System Information</h3><div class="grid grid-cols-1 gap-4 md:grid-cols-3"><div class="rounded-2xl bg-slate-50 p-4 text-center"><p class="text-sm text-slate-500">Version</p><p class="text-2xl font-bold text-slate-800">2.0.0</p></div><div class="rounded-2xl bg-slate-50 p-4 text-center"><p class="text-sm text-slate-500">Last Updated</p><p class="text-lg font-semibold text-slate-800">April 2026</p></div><div class="rounded-2xl bg-slate-50 p-4 text-center"><p class="text-sm text-slate-500">Status</p><p class="text-lg font-semibold text-green-600">Online</p></div></div></div></div></main>
+            </section>
+        </div>
+    </div>
+
+    <script src="api.js" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="script.js" defer></script>
+</body>
+</html>
