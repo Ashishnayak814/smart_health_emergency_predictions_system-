@@ -52,6 +52,9 @@ Then open:
 
 <img width="1919" height="1067" alt="Screenshot 2026-04-09 090604" src="https://github.com/user-attachments/assets/ae6481a8-d751-49b4-b6e2-d392e92c3fd2" />
 
+alert:
+<img width="1919" height="1079" alt="Screenshot 2026-04-09 094937" src="https://github.com/user-attachments/assets/9f675832-c997-4818-8713-f5beb8afef6a" />
+
 
 ## Notes
 
